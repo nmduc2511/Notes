@@ -26,12 +26,24 @@ final class C_FoldersViewController: UIViewController {
         title.font = UIFont.boldSystemFont(ofSize: 16)
         navigationItem.titleView = title
         navigationController?.navigationBar.barStyle = .black
+        
+        let rightBtn = UIButton()
+        rightBtn.setTitle("Reset", for: .normal)
+        rightBtn.setTitleColor(.yellowApp, for: .normal)
+        rightBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        rightBtn.addTarget(self, action: #selector(deleteAll), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBtn)
     }
     
     // MARK: - Setup Toolbar
     private func setupToolbar() {
         toolbar.addParentView(view)
         toolbar.othersDelegate = self
+    }
+    
+    @objc private func deleteAll() {
+        foldersManagement.deleteAll()
+        mView.reloadFolders()
     }
 }
 
