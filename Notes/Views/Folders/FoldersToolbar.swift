@@ -8,6 +8,12 @@ protocol FoldersToolbarDelegate: AnyObject {
 class FoldersToolbar: UIToolbar {
     weak var othersDelegate: FoldersToolbarDelegate?
     
+    var hiddenFolderButton = false {
+        willSet {
+            items?.first?.isHidden = newValue
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

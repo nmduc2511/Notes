@@ -13,9 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let main = C_FoldersViewController(
-            nibName: String(describing: C_FoldersViewController.self),
-            bundle: nil)
+            nibName: "C_FoldersViewController",
+            bundle: nil
+        )
+        main.mediator = RealmFoldersMediator(
+            folderManager: FoldersManager(),
+            realmManager: RealmManager())
+        main.router = FoldersRouter(owner: main)
         let nav = UINavigationController(rootViewController: main)
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

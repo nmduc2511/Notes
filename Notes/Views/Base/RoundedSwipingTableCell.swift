@@ -1,9 +1,19 @@
 import UIKit
+import SwipeCellKit
 
-class RoundedTableCell: BaseTableCell {
+class RoundedSwipingTableCell: SwipeTableViewCell {
     private let roundedView = UIView()
     
-    override func setupView() {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView() {
         setupRoundedView()
     }
     
@@ -16,7 +26,17 @@ class RoundedTableCell: BaseTableCell {
         // Determine if this is the first or last cell
         if let tableView = superview as? UITableView,
            let indexPath = tableView.indexPath(for: self) {
-            if indexPath.row == 0 {
+            if indexPath.row == 0,
+               indexPath.row == tableView
+                .numberOfRows(inSection: indexPath.section) - 1 {
+                roundedView.layer.cornerRadius = 10
+                roundedView.layer.maskedCorners = [
+                    .layerMinXMinYCorner,
+                    .layerMaxXMinYCorner,
+                    .layerMinXMaxYCorner,
+                    .layerMaxXMaxYCorner
+                ]
+            } else if indexPath.row == 0 {
                 // First item: Round top-left and top-right corners
                 roundedView.layer.cornerRadius = 10
                 roundedView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

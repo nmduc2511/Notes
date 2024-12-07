@@ -1,14 +1,21 @@
 import UIKit
 
 final class C_FoldersViewController: UIViewController {
-    let mView = FoldersView()
-    let toolbar = FoldersToolbar()
-    let foldersManagement = FoldersManagement()
+    private var mView = FoldersView()
+    private var toolbar = FoldersToolbar()
+    var mediator: RealmFoldersMediator!
+    var router: FoldersRouter!
     
     // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupData()
         setupView()
+        setupObserver()
+    }
+    
+    private func setupData() {
+        mediator.configuration()
     }
     
     // MARK: Setup views
@@ -26,44 +33,62 @@ final class C_FoldersViewController: UIViewController {
         title.font = UIFont.boldSystemFont(ofSize: 16)
         navigationItem.titleView = title
         navigationController?.navigationBar.barStyle = .black
-        
-        let rightBtn = UIButton()
-        rightBtn.setTitle("Reset", for: .normal)
-        rightBtn.setTitleColor(.yellowApp, for: .normal)
-        rightBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        rightBtn.addTarget(self, action: #selector(deleteAll), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBtn)
     }
     
-    // MARK: - Setup Toolbar
     private func setupToolbar() {
         toolbar.addParentView(view)
         toolbar.othersDelegate = self
     }
     
-    @objc private func deleteAll() {
-        foldersManagement.deleteAll()
+    // MARK: Setup Observer
+    private func setupObserver() {
+        NotificationCenter.default
+            .addObserver(
+                self,
+                selector: #selector(updateNote),
+                name: Notification.Name.noteUpdate,
+                object: nil)
+        
+        NotificationCenter.default
+            .addObserver(
+                self,
+                selector: #selector(deleteNote),
+                name: Notification.Name.noteDelete,
+                object: nil)
+    }
+    
+    @objc func updateNote(_ notification: Notification) {
+        guard let note = notification.object as? NoteModel
+        else { return }
+        
+        mediator.update(note)
+        mView.reloadFolders()
+    }
+    
+    @objc func deleteNote(_ notification: Notification) {
+        guard let note = notification.object as? NoteModel
+        else { return }
+        
+        mediator.delete(note)
         mView.reloadFolders()
     }
 }
 
 extension C_FoldersViewController: FoldersToolbarDelegate {
     func onTouchFolder() {
-        let vc = NewFolderViewController(
-            nibName: String(describing: NewFolderViewController.self),
-            bundle: nil)
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
-        
-        vc.creatingNewFolder = { [weak self] folder in
-            guard let self = self else { return }
-            self.foldersManagement.add(folder)
-            self.mView.reloadFolders()
-        }
+        router.presentNewFolderScreen()
     }
     
     func onTouchNote() {
-        
+        let folderId = mediator.defaultFolderId
+        let note = NoteModel(folderId: folderId)
+        router.pushNoteScreen(note: note)
+    }
+}
+
+extension C_FoldersViewController: NewFolderVCDelegate {
+    func createFolder(_ folder: FolderModel) {
+        mediator.add(folder)
+        mView.reloadFolders()
     }
 }

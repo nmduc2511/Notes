@@ -3,15 +3,20 @@ import UIKit
 extension C_FoldersViewController: UITableViewDataSource,
                                    UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foldersManagement.totalFolders
+        return mediator.totalNumberOfFolders
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(FoldersTableCell.self)
-        let folder = foldersManagement.folder(at: indexPath.row)
+        let folder = mediator.folder(at: indexPath.row)
         cell.setupView()
         cell.bindingData(folder)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let folder = mediator.folder(at: indexPath.row)
+        router.pushNotesScreen(folder: folder)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

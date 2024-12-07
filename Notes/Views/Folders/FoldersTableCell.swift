@@ -1,6 +1,6 @@
 import UIKit
 
-class FoldersTableCell: RoundedTableCell {
+class FoldersTableCell: RoundedSwipingTableCell {
     lazy var rightImgView: UIImageView = {
         let view = UIImageView(image: .icFolder)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -83,5 +83,6 @@ class FoldersTableCell: RoundedTableCell {
     
     func bindingData(_ folder: FolderModel) {
         titleLb.text = folder.name
+        countLb.text = folder.notes.count.description
     }
 }

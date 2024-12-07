@@ -1,15 +1,12 @@
-//
-//  NewFolderViewController.swift
-//  Notes
-//
-//  Created by duc nguyen on 01/12/2024.
-//
-
 import UIKit
 
-class NewFolderViewController: UIViewController {
-    let mView = NewFolderView()
-    var creatingNewFolder: ((FolderModel) -> Void)?
+protocol NewFolderVCDelegate: AnyObject {
+    func createFolder(_ folder: FolderModel)
+}
+
+final class NewFolderViewController: UIViewController {
+    private let mView = NewFolderView()
+    weak var delegate: NewFolderVCDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +48,7 @@ class NewFolderViewController: UIViewController {
     @objc private func onTouchDone() {
         if let name = mView.folderName, !name.isEmpty {
             let folder = FolderModel(name: name)
-            creatingNewFolder?(folder)
+            delegate?.createFolder(folder)
             dismiss(animated: true)
         } else {
             dismiss(animated: true)

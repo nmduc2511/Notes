@@ -2,64 +2,25 @@ import RealmSwift
 
 class FolderModel {
     var id: String
-    var creatingDate: Date
+    var createdDate: Date
     var name: String
+    var type: Int
+    var notes: [NoteModel]
     
-    init(name: String) {
+    init(name: String, 
+         type: FolderType = .other) {
         self.id = UUID().uuidString
-        self.creatingDate = Date()
+        self.createdDate = Date()
         self.name = name
+        self.type = type.rawValue
+        self.notes = []
     }
     
-    init(_ realm: FolderRealmModel) {
+    init(_ realm: RealmFolderModel) {
         id = realm.id
-        creatingDate = realm.creatingDate
+        createdDate = realm.createdDate
         name = realm.name
-    }
-}
-
-protocol FoldersManagementProtocol {
-    func add(_ folder: FolderModel)
-    func deleteAll()
-}
-
-class FoldersManagement: FoldersManagementProtocol {
-    private var folders = [FolderModel]()
-    
-    init() {
-        let realm = try! Realm()
-        let realmFolders = realm.objects(FolderRealmModel.self)
-        realmFolders.forEach { realm in
-            let folder = FolderModel(realm)
-            folders.append(folder)
-        }
-        
-        folders = folders.sorted(
-            by: { $0.creatingDate.compare($1.creatingDate) == .orderedDescending }
-        )
-    }
-    
-    var totalFolders: Int {
-        return folders.count
-    }
-    
-    func add(_ folder: FolderModel) {
-        folders.insert(folder, at: 0)
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(FolderRealmModel(folder))
-        }
-    }
-    
-    func deleteAll() {
-        folders.removeAll()
-        let realm = try! Realm()
-        try! realm.write {
-            realm.deleteAll()
-        }
-    }
-    
-    func folder(at index: Int) -> FolderModel {
-        return folders[index]
+        type = realm.type
+        notes = realm.notes.map({ NoteModel($0) })
     }
 }
