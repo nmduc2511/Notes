@@ -1,25 +1,18 @@
 import UIKit
 
-final class C_FoldersViewController: UIViewController {
+final class C_FoldersViewController: BaseViewController {
     private var mView = FoldersView()
     private var toolbar = FoldersToolbar()
     var mediator: RealmFoldersMediator!
     var router: FoldersRouter!
     
     // MARK: Life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupData()
-        setupView()
-        setupObserver()
-    }
-    
-    private func setupData() {
+    override func setupData() {
         mediator.configuration()
     }
     
     // MARK: Setup views
-    private func setupView() {
+    override func setupView() {
         mView.addParentView(view)
         mView.add(dataSource: self, delegate: self)
         setupNaviBar()
@@ -41,20 +34,12 @@ final class C_FoldersViewController: UIViewController {
     }
     
     // MARK: Setup Observer
-    private func setupObserver() {
-        NotificationCenter.default
-            .addObserver(
-                self,
-                selector: #selector(updateNote),
-                name: Notification.Name.noteUpdate,
-                object: nil)
-        
-        NotificationCenter.default
-            .addObserver(
-                self,
-                selector: #selector(deleteNote),
-                name: Notification.Name.noteDelete,
-                object: nil)
+    override func setupObservers(
+        _ names: [Notification.Name : Selector]) {
+        super.setupObservers([
+            .noteUpdate: #selector(updateNote),
+            .noteDelete: #selector(deleteNote)
+        ])
     }
     
     @objc func updateNote(_ notification: Notification) {

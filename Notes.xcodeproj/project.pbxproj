@@ -24,6 +24,7 @@
 		6C8649622CFB579600310964 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8649612CFB579600310964 /* UITableView+Extensions.swift */; };
 		6C8649642CFB5DA600310964 /* BaseTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8649632CFB5DA600310964 /* BaseTableCell.swift */; };
 		6C8649662CFB6D6A00310964 /* FoldersToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8649652CFB6D6A00310964 /* FoldersToolbar.swift */; };
+		6C92750F2D068C2E0099658C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C92750E2D068C2E0099658C /* BaseViewController.swift */; };
 		6CA0C9D92D0402D8003FD2BB /* NotesMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0C9D82D0402D8003FD2BB /* NotesMediator.swift */; };
 		6CA0C9DB2D040442003FD2BB /* NotesSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0C9DA2D040442003FD2BB /* NotesSectionType.swift */; };
 		6CA0C9DD2D040901003FD2BB /* NotesVC+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0C9DC2D040901003FD2BB /* NotesVC+UITableView.swift */; };
@@ -68,6 +69,7 @@
 		6C8649612CFB579600310964 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		6C8649632CFB5DA600310964 /* BaseTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableCell.swift; sourceTree = "<group>"; };
 		6C8649652CFB6D6A00310964 /* FoldersToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersToolbar.swift; sourceTree = "<group>"; };
+		6C92750E2D068C2E0099658C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6CA0C9D82D0402D8003FD2BB /* NotesMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesMediator.swift; sourceTree = "<group>"; };
 		6CA0C9DA2D040442003FD2BB /* NotesSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesSectionType.swift; sourceTree = "<group>"; };
 		6CA0C9DC2D040901003FD2BB /* NotesVC+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotesVC+UITableView.swift"; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				6C86495F2CFB570A00310964 /* RoundedSwipingTableCell.swift */,
 				6C8649632CFB5DA600310964 /* BaseTableCell.swift */,
+				6C92750E2D068C2E0099658C /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				6C7C9BC12CFC0DED00F9BAC8 /* FolderModel.swift in Sources */,
 				6C8649622CFB579600310964 /* UITableView+Extensions.swift in Sources */,
 				6CFDD5312CFF507E00680E21 /* RealmFolderModel.swift in Sources */,
+				6C92750F2D068C2E0099658C /* BaseViewController.swift in Sources */,
 				6C86495B2CFB501F00310964 /* FoldersTableCell.swift in Sources */,
 				6CA0C9D92D0402D8003FD2BB /* NotesMediator.swift in Sources */,
 				6C86495D2CFB508700310964 /* UIColor+Extensions.swift in Sources */,

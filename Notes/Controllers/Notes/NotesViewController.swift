@@ -1,32 +1,24 @@
 import UIKit
 import SwipeCellKit
 
-final class NotesViewController: UIViewController {
+final class NotesViewController: BaseViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private let toolbar = FoldersToolbar()
     var mediator: NotesMediator!
     var router: NotesRouter!
-    
-    // MARK: - Life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupData()
-        setupView()
-    }
-    
+
     // MARK: - Setup Data
-    private func setupData() {
+    override func setupData() {
         mediator.configuration()
     }
     
     // MARK: - Setup View
-    private func setupView() {
-        view.backgroundColor = .black
+    override func setupView() {
+        super.setupView()
         setupTableView()
         setupNavi()
         setupToolbar()
-        setupObserver()
     }
     
     private func setupTableView() {
@@ -54,13 +46,11 @@ final class NotesViewController: UIViewController {
     }
     
     // MARK: Setup Observer
-    private func setupObserver() {
-        NotificationCenter.default
-            .addObserver(
-                self,
-                selector: #selector(updateNote),
-                name: Notification.Name.noteUpdate,
-                object: nil)
+    override func setupObservers(
+        _ names: [Notification.Name : Selector]) {
+        super.setupObservers([
+            .noteUpdate: #selector(updateNote)
+        ])
     }
     
     @objc func updateNote() {
